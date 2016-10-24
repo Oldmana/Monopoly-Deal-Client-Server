@@ -41,6 +41,11 @@ public class PropertyWildCard extends PropertyCard
 		return false;
 	}
 	
+	public boolean isMulticolor()
+	{
+		return types[0] == PropertyType.MULTICOLOR_WILD;
+	}
+	
 	public PropertyType[] getTypes()
 	{
 		return types;
