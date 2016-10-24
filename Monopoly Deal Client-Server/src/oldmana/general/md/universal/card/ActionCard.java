@@ -15,4 +15,34 @@ public abstract class ActionCard extends Card
 	 * @param target - Player's target, if any
 	 */
 	public abstract void playOn(Player owner, Player target);
+	
+	
+	public enum ActionCardType
+	{
+		GO(false);
+		
+		private boolean offensive;
+		
+		ActionCardType(boolean offensive)
+		{
+			this.offensive = offensive;
+		}
+		
+		public boolean isOffensive()
+		{
+			return offensive;
+		}
+		
+		public static ActionCardType typeOf(int hashCode)
+		{
+			for (ActionCardType type : values())
+			{
+				if (type.hashCode() == hashCode)
+				{
+					return type;
+				}
+			}
+			return null;
+		}
+	}
 }

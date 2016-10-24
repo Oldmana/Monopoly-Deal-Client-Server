@@ -9,15 +9,17 @@ import oldmana.general.md.universal.player.Player;
 
 public class ClientGame
 {
+	private static ClientGame game;
+	
 	private int self;
-	private Player[] players; // Maximum 3 players
+	private Player[] players; // Maximum 4 players
 	private ClientDeck deck;
 	
 	private List<Card> cardCache = new ArrayList<Card>();
 	
 	public ClientGame()
 	{
-		
+		game = this;
 	}
 	
 	public Player getSelf()
@@ -64,5 +66,10 @@ public class ClientGame
 			}
 		}
 		return null;
+	}
+	
+	public ClientGame getGameInstance()
+	{
+		return game;
 	}
 }

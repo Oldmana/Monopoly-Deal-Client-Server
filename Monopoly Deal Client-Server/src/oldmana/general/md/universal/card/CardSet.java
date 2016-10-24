@@ -26,6 +26,19 @@ public class CardSet
 		return setType.getRent(properties.size());
 	}
 	
+	public boolean isSolid()
+	{
+		for (PropertyCard card : properties)
+		{
+			PropertyType type = card.getType();
+			if (type == PropertyType.WILD || type == PropertyType.MULTICOLOR_WILD)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public boolean isComplete()
 	{
 		return setType.getMaxSet() <= properties.size(); // The size better not be greater than the max set..

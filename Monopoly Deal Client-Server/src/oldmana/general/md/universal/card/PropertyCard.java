@@ -49,5 +49,22 @@ public class PropertyCard extends Card
 		{
 			return rent[setCount - 1];
 		}
+		
+		/**Method is here solely for easy identification when sending property types through packets.
+		 * 
+		 * @param hashCode - The type's hash code.
+		 * @return The PropertyType with the corresponding hash code.
+		 */
+		public static PropertyType typeOf(int hashCode)
+		{
+			for (PropertyType type : values())
+			{
+				if (type.hashCode() == hashCode)
+				{
+					return type;
+				}
+			}
+			return null;
+		}
 	}
 }
