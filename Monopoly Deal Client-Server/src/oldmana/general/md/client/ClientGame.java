@@ -1,6 +1,10 @@
 package oldmana.general.md.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import oldmana.general.md.client.card.ClientDeck;
+import oldmana.general.md.universal.card.Card;
 import oldmana.general.md.universal.player.Player;
 
 public class ClientGame
@@ -8,6 +12,8 @@ public class ClientGame
 	private int self;
 	private Player[] players; // Maximum 3 players
 	private ClientDeck deck;
+	
+	private List<Card> cardCache = new ArrayList<Card>();
 	
 	public ClientGame()
 	{
@@ -46,5 +52,17 @@ public class ClientGame
 	public ClientDeck getDeck()
 	{
 		return deck;
+	}
+	
+	public Card getCardbyID(int ID)
+	{
+		for (Card card : cardCache)
+		{
+			if (card.getID() == ID)
+			{
+				return card;
+			}
+		}
+		return null;
 	}
 }
