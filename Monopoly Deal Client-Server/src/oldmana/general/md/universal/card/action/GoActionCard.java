@@ -1,16 +1,19 @@
 package oldmana.general.md.universal.card.action;
 
+import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 import oldmana.general.md.universal.Universal;
 import oldmana.general.md.universal.card.ActionCard;
+import oldmana.general.md.universal.card.Card;
+import oldmana.general.md.universal.packet.MDPacketUtils;
 import oldmana.general.md.universal.player.Player;
 
 public class GoActionCard extends ActionCard
 {
 	
 	
-	public GoActionCard(int ID, String name, int value)
+	public GoActionCard(int ID, int value)
 	{
-		super(ID, name, value);
+		super(ID, "Go", value);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,9 +26,18 @@ public class GoActionCard extends ActionCard
 		}
 		else if (Universal.isServer())
 		{
-			owner.drawCard();
-			owner.drawCard();
-			// TODO: Send packets to clients
+			Card c1 = owner.drawCard();
+			Card c2 = owner.drawCard();
+			try
+			{
+				Packet.sendPacket(owner.getConnection(), MDPacketUtils.constructCardDataPacket(c1));
+				Packet.sendPacket(owner.getConnection(), MDPacketUtils.constructCardDataPacket(c2));
+			}
+			catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

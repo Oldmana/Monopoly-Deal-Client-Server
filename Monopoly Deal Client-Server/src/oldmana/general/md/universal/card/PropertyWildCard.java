@@ -1,5 +1,8 @@
 package oldmana.general.md.universal.card;
 
+/**Represents a bicolor wild card. Bear in mind, a multicolor wild card is NOT a PropertyWildCard.
+ *
+ */
 public class PropertyWildCard extends PropertyCard
 {
 	private PropertyType[] types;
@@ -39,11 +42,6 @@ public class PropertyWildCard extends PropertyCard
 			}
 		}
 		return false;
-	}
-	
-	public boolean isMulticolor()
-	{
-		return types[0] == PropertyType.MULTICOLOR_WILD;
 	}
 	
 	public PropertyType[] getTypes()

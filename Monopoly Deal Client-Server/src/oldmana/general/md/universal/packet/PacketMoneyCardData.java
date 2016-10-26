@@ -1,36 +1,23 @@
 package oldmana.general.md.universal.packet;
 
-import oldmana.general.md.universal.card.PropertyCard;
-import oldmana.general.md.universal.card.PropertyCard.PropertyType;
 import net.teambrimis.brett.MJNetworkingAPI.MJDataBuffer;
 import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 
-public class PacketPropertyCardData extends Packet
+public class PacketMoneyCardData extends Packet
 {
-	public static int ID = 5;
+	public static int ID = 8;
 	
 	private int cardID;
 	private String name;
 	private int value;
 	
-	private PropertyType type;
+	public PacketMoneyCardData() {}
 	
-	public PacketPropertyCardData() {}
-	
-	public PacketPropertyCardData(int cardID, String name, int value, PropertyType type)
+	public PacketMoneyCardData(int cardID, String name, int value)
 	{
 		this.cardID = cardID;
 		this.name = name;
 		this.value = value;
-		this.type = type;
-	}
-	
-	public PacketPropertyCardData(PropertyCard card)
-	{
-		this.cardID = card.getID();
-		this.name = card.getName();
-		this.value = card.getValue();
-		this.type = card.getType();
 	}
 	
 	public void setCardID(int cardID)
@@ -63,23 +50,12 @@ public class PacketPropertyCardData extends Packet
 		return value;
 	}
 	
-	public void setPropertyType(PropertyType type)
-	{
-		this.type = type;
-	}
-	
-	public PropertyType getPropertyType()
-	{
-		return type;
-	}
-	
 	@Override
 	public void fromBytes(MJDataBuffer data)
 	{
 		setCardID(data.getInt());
 		setName(data.getString());
 		setValue(data.getInt());
-		setPropertyType(PropertyType.typeOf(data.getInt()));
 	}
 
 	@Override
@@ -90,7 +66,6 @@ public class PacketPropertyCardData extends Packet
 		data.addInt(getCardID());
 		data.addString(getName());
 		data.addInt(getValue());
-		data.addInt(getPropertyType().hashCode());
 		data.finalizeData();
 		return data.getByteArray();
 	}

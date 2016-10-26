@@ -2,6 +2,7 @@ package oldmana.general.md.universal.packet;
 
 import net.teambrimis.brett.MJNetworkingAPI.MJDataBuffer;
 import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
+import oldmana.general.md.universal.card.ActionCard;
 import oldmana.general.md.universal.card.ActionCard.ActionCardType;
 
 public class PacketActionCardData extends Packet
@@ -22,6 +23,14 @@ public class PacketActionCardData extends Packet
 		this.name = name;
 		this.value = value;
 		this.type = type;
+	}
+	
+	public PacketActionCardData(ActionCard card)
+	{
+		this.cardID = card.getID();
+		this.name = card.getName();
+		this.value = card.getValue();
+		this.type = ActionCardType.typeOf(card);
 	}
 	
 	public void setCardID(int cardID)

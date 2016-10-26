@@ -3,6 +3,7 @@ package oldmana.general.md.universal.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.teambrimis.brett.MJNetworkingAPI.MJConnection;
 import oldmana.general.md.server.ServerGame;
 import oldmana.general.md.universal.card.Card;
 import oldmana.general.md.universal.card.CardSet;
@@ -17,6 +18,10 @@ public class Player
 	
 	private Hand hand;
 	private InvisibleHand invisibleHand;
+	
+	/**Only used by the server.
+	 */
+	private MJConnection connection;
 	
 	public Player(int ID)
 	{
@@ -92,5 +97,19 @@ public class Player
 	public InvisibleHand getInvisibleHand()
 	{
 		return invisibleHand;
+	}
+	
+	public void setConnection(MJConnection connection)
+	{
+		this.connection = connection;
+	}
+	
+	/**Only used by the server. The client does not have direct connections to any players.
+	 * 
+	 * @return The connection to the player
+	 */
+	public MJConnection getConnection()
+	{
+		return connection;
 	}
 }

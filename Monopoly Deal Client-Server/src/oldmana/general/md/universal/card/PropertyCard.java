@@ -6,7 +6,7 @@ public class PropertyCard extends Card
 	
 	public PropertyCard(int ID, PropertyType type)
 	{
-		super(ID, "", type.getValue());
+		super(ID, type.name(), type.getValue());
 		this.type = type;
 	}
 	

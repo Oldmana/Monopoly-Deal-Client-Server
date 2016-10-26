@@ -1,5 +1,6 @@
 package oldmana.general.md.universal.card;
 
+import oldmana.general.md.universal.card.action.GoActionCard;
 import oldmana.general.md.universal.player.Player;
 
 public abstract class ActionCard extends Card
@@ -41,6 +42,15 @@ public abstract class ActionCard extends Card
 				{
 					return type;
 				}
+			}
+			return null;
+		}
+		
+		public static ActionCardType typeOf(ActionCard card)
+		{
+			if (card instanceof GoActionCard)
+			{
+				return GO;
 			}
 			return null;
 		}
