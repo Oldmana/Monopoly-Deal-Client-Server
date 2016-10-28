@@ -45,6 +45,10 @@ public class JCard extends JComponent
 		valueRB.setVerticalAlignment(Alignment.BOTTOM);
 		valueTL.paint((Graphics2D) g);
 		valueRB.paint((Graphics2D) g);
+		TextPainter name = new TextPainter(card.getName(), Utils.getFont(Font.PLAIN, (int) (getHeight() * 0.1)), new Rectangle(0, 0, getWidth(), getHeight()), false, false);
+		name.setHorizontalAlignment(Alignment.CENTER);
+		name.setVerticalAlignment(Alignment.CENTER);
+		name.paint((Graphics2D) g);
 		//g.drawString("$" + card.getValue() + "M", 2, getHeight() / 2);
 	}
 }
