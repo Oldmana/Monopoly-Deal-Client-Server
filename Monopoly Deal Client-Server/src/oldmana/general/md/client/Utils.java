@@ -1,13 +1,16 @@
 package oldmana.general.md.client;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
 public class Utils
 {
-	private static Font font = new JButton().getFont();
+	private static JButton button = new JButton();
+	
+	private static Font font = button.getFont();
 	
 	/**Sets the location of the component at a percent relative to the parent container. The location is centered.
 	 * 
@@ -46,5 +49,10 @@ public class Utils
 	public static Font getFont(int type, int size)
 	{
 		return new Font(font.getFontName(), type, size);
+	}
+	
+	public static FontMetrics getFontMetrics(Font font)
+	{
+		return button.getFontMetrics(font);
 	}
 }

@@ -8,4 +8,14 @@ public class InvisibleHand
 	{
 		
 	}
+	
+	public void setCardCount(int cardCount)
+	{
+		this.cardCount = cardCount;
+	}
+	
+	public int getCardCount()
+	{
+		return cardCount;
+	}
 }

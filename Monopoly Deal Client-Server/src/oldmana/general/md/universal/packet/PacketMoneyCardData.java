@@ -1,5 +1,6 @@
 package oldmana.general.md.universal.packet;
 
+import oldmana.general.md.universal.card.Card;
 import net.teambrimis.brett.MJNetworkingAPI.MJDataBuffer;
 import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 
@@ -18,6 +19,13 @@ public class PacketMoneyCardData extends Packet
 		this.cardID = cardID;
 		this.name = name;
 		this.value = value;
+	}
+	
+	public PacketMoneyCardData(Card card)
+	{
+		this.cardID = card.getID();
+		this.name = card.getName();
+		this.value = card.getValue();
 	}
 	
 	public void setCardID(int cardID)

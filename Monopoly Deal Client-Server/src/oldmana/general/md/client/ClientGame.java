@@ -3,8 +3,10 @@ package oldmana.general.md.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 import oldmana.general.md.client.card.ClientDeck;
 import oldmana.general.md.universal.card.Card;
+import oldmana.general.md.universal.packet.PacketHand;
 import oldmana.general.md.universal.player.Player;
 
 public class ClientGame
@@ -15,7 +17,7 @@ public class ClientGame
 	private Player[] players; // Maximum 4 players
 	private ClientDeck deck;
 	
-	private List<Card> cardCache = new ArrayList<Card>();
+	private List<Card> cardRegistry = new ArrayList<Card>();
 	
 	public ClientGame()
 	{
@@ -58,7 +60,7 @@ public class ClientGame
 	
 	public Card getCardbyID(int ID)
 	{
-		for (Card card : cardCache)
+		for (Card card : cardRegistry)
 		{
 			if (card.getID() == ID)
 			{
@@ -68,7 +70,16 @@ public class ClientGame
 		return null;
 	}
 	
-	public ClientGame getGameInstance()
+	public void processPacket(Packet p)
+	{
+		if (p instanceof PacketHand)
+		{
+			PacketHand packet = (PacketHand) p;
+			getPlayerByID(packet.getPlayerID()).getInvisibleHand().setCardCount(packet.getCardIDs().length);
+		}
+	}
+	
+	public static ClientGame getGameInstance()
 	{
 		return game;
 	}

@@ -8,6 +8,11 @@ import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 
 public class MDPacketUtils
 {
+	/**Automatically constructs the appropriate packet for the type of card.
+	 * 
+	 * @param card - The card to get a packet for.
+	 * @return A packet for the card.
+	 */
 	public static Packet constructCardDataPacket(Card card)
 	{
 		if (card instanceof ActionCard)
@@ -22,6 +27,6 @@ public class MDPacketUtils
 		{
 			return new PacketPropertyCardData((PropertyCard) card);
 		}
-		return null;
+		return new PacketMoneyCardData(card);
 	}
 }
