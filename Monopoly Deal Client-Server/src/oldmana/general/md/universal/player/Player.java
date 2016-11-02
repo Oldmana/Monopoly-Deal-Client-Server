@@ -77,6 +77,18 @@ public class Player
 		return null;
 	}
 	
+	public boolean hasSafeSet(PropertyType type)
+	{
+		for (CardSet set : properties)
+		{
+			if (set.getSetType() == type && set.getCardCount() + 1 < type.getMaxSet())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Card drawCard()
 	{
 		ServerGame game = ServerGame.getGameInstance();
@@ -160,7 +172,7 @@ public class Player
 				PropertyCard prop = (PropertyCard) card;
 				if (card instanceof PropertyWildCard)
 				{
-					// TODO
+					
 				}
 				else
 				{

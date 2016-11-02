@@ -36,6 +36,16 @@ public class CardSet
 		properties.remove(card);
 	}
 	
+	public List<PropertyCard> getCards()
+	{
+		return properties;
+	}
+	
+	public int getCardCount()
+	{
+		return properties.size();
+	}
+	
 	public boolean isSolid()
 	{
 		for (PropertyCard card : properties)
