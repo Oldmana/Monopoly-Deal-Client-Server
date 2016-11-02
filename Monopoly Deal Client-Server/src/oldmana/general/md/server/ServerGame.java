@@ -72,6 +72,16 @@ public class ServerGame
 		return null;
 	}
 	
+	public void charge(Player renter, Player rented, int amount)
+	{
+		
+	}
+	
+	public void chargeAll(Player renter, int amount)
+	{
+		
+	}
+	
 	public static ServerGame getGameInstance()
 	{
 		return game;

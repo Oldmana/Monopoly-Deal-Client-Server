@@ -5,9 +5,13 @@ import java.util.List;
 
 import net.teambrimis.brett.MJNetworkingAPI.MJConnection;
 import oldmana.general.md.server.ServerGame;
+import oldmana.general.md.universal.card.ActionCard;
 import oldmana.general.md.universal.card.Card;
 import oldmana.general.md.universal.card.CardSet;
+import oldmana.general.md.universal.card.MoneyCard;
+import oldmana.general.md.universal.card.PropertyCard;
 import oldmana.general.md.universal.card.PropertyCard.PropertyType;
+import oldmana.general.md.universal.card.PropertyWildCard;
 
 public class Player
 {
@@ -99,6 +103,11 @@ public class Player
 		return invisibleHand;
 	}
 	
+	public CashPile getCashPile()
+	{
+		return cash;
+	}
+	
 	public void setConnection(MJConnection connection)
 	{
 		this.connection = connection;
@@ -111,5 +120,56 @@ public class Player
 	public MJConnection getConnection()
 	{
 		return connection;
+	}
+	
+	public static class RentStatus
+	{
+		private Player renter;
+		private int owed;
+		
+		public void setRenter(Player player)
+		{
+			renter = player;
+		}
+		
+		public Player getRenter()
+		{
+			return renter;
+		}
+		
+		public void setOwed(int owed)
+		{
+			this.owed = owed;
+		}
+		
+		public int getOwed()
+		{
+			return owed;
+		}
+		
+		public void pay(Card card)
+		{
+			owed -= card.getValue();
+			if (card instanceof ActionCard || card instanceof MoneyCard)
+			{
+				// TODO: Add to cash pile
+				//renter.getCashPile()
+			}
+			else if (card instanceof PropertyCard)
+			{
+				PropertyCard prop = (PropertyCard) card;
+				if (card instanceof PropertyWildCard)
+				{
+					// TODO
+				}
+				else
+				{
+					if (renter.hasSolidSet(prop.getType()))
+					{
+						renter.getSolidSet(prop.getType()).addCard(prop);
+					}
+				}
+			}
+		}
 	}
 }

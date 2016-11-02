@@ -26,6 +26,16 @@ public class CardSet
 		return setType.getRent(properties.size());
 	}
 	
+	public void addCard(PropertyCard card)
+	{
+		properties.add(card);
+	}
+	
+	public void removeCard(PropertyCard card)
+	{
+		properties.remove(card);
+	}
+	
 	public boolean isSolid()
 	{
 		for (PropertyCard card : properties)

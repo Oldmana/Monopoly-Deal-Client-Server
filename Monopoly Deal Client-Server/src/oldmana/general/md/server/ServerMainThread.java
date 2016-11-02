@@ -15,7 +15,20 @@ public class ServerMainThread extends Thread
 	@Override
 	public void run()
 	{
+		while (!tasks.isEmpty())
+		{
+			tasks.get(0).run();
+			tasks.remove(0);
+		}
 		
+		try
+		{
+			Thread.sleep(1);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void schedule(Runnable runnable)
