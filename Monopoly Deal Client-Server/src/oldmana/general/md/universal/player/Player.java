@@ -89,6 +89,49 @@ public class Player
 		return false;
 	}
 	
+	/**Intelligently places a property in a set and ensures that no monopolies are created
+	 * 
+	 * @param prop - Property to grant
+	 */
+	public void grantProperty(PropertyCard prop)
+	{
+		if (prop instanceof PropertyWildCard)
+		{
+			PropertyWildCard wild = (PropertyWildCard) prop;
+			boolean success = false;
+			// Attempt to place card in an existing set without creating a monopoly
+			for (CardSet set : properties)
+			{
+				if ((set.getSetType() == wild.getTypes()[0] || set.getSetType() == wild.getTypes()[1]) &&
+						set.getCardCount() + 1 < set.getSetType().getMaxSet())
+				{
+					set.addCard(prop);
+					success = true;
+					break;
+				}
+				else if (set.isAmbiguous() && (set.getOtherType() == wild.getTypes()[0] || 
+						set.getOtherType() == wild.getTypes()[1]) && set.getCardCount() + 1 < 
+						set.getOtherType().getMaxSet())
+				{
+					set.toggleType();
+					set.addCard(prop);
+					success = true;
+					break;
+				}
+			}
+			if (!success)
+			{
+				CardSet set = new CardSet(wild.getTypes()[0]);
+				set.addCard(prop);
+				properties.add(set);
+			}
+		}
+		else
+		{
+			
+		}
+	}
+	
 	public Card drawCard()
 	{
 		ServerGame game = ServerGame.getGameInstance();
@@ -176,6 +219,7 @@ public class Player
 				}
 				else
 				{
+					// TODO: Better card placement logic needed
 					if (renter.hasSolidSet(prop.getType()))
 					{
 						renter.getSolidSet(prop.getType()).addCard(prop);

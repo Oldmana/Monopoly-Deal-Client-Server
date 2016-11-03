@@ -59,6 +59,48 @@ public class CardSet
 		return true;
 	}
 	
+	public boolean isAmbiguous()
+	{
+		if (properties.size() == 1 && properties.get(0) instanceof PropertyWildCard)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public PropertyType getOtherType()
+	{
+		if (isAmbiguous())
+		{
+			PropertyType[] types = ((PropertyWildCard) properties.get(0)).getTypes();
+			if (types[0] == setType)
+			{
+				return types[1];
+			}
+			else
+			{
+				return types[0];
+			}
+		}
+		return null;
+	}
+	
+	public void toggleType()
+	{
+		if (isAmbiguous())
+		{
+			PropertyType[] types = ((PropertyWildCard) properties.get(0)).getTypes();
+			if (types[0] == setType)
+			{
+				setType = types[1];
+			}
+			else
+			{
+				setType = types[0];
+			}
+		}
+	}
+	
 	public boolean isComplete()
 	{
 		return setType.getMaxSet() <= properties.size(); // The size better not be greater than the max set..
