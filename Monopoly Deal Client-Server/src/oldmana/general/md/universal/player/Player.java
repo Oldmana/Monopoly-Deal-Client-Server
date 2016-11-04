@@ -93,7 +93,7 @@ public class Player
 	 * 
 	 * @param prop - Property to grant
 	 */
-	public void grantProperty(PropertyCard prop)
+	public void grantPropertySafely(PropertyCard prop)
 	{
 		if (prop instanceof PropertyWildCard)
 		{

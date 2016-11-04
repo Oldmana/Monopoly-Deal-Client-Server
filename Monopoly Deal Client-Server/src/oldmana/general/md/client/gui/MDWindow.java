@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 
 import oldmana.general.md.client.Utils;
 import oldmana.general.md.client.gui.component.JCard;
@@ -49,6 +50,7 @@ public class MDWindow extends JFrame
 		table.add(card);
 		Utils.setSizeOf(card, 0.08, 0.2);
 		Utils.setLocationOfCentered(card, 0.1, 0.1);
+		
 	}
 	
 	public void showMenu()
