@@ -2,6 +2,9 @@ package oldmana.general.md.universal;
 
 import javax.swing.SwingUtilities;
 
+import oldmana.general.md.client.ClientGame;
+import oldmana.general.md.server.ServerGame;
+
 public class Universal
 {
 	/**This method checks if the code is currently executing the event dispatch thread.
@@ -20,5 +23,18 @@ public class Universal
 	public static boolean isServer()
 	{
 		return false; // TODO: Implement when server thread is created
+	}
+	
+	public static UniversalGame getGame()
+	{
+		if (isClient())
+		{
+			return ClientGame.getGameInstance();
+		}
+		else if (isServer())
+		{
+			return ServerGame.getGameInstance();
+		}
+		return null;
 	}
 }

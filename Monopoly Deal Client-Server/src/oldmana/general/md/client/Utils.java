@@ -1,10 +1,18 @@
 package oldmana.general.md.client;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+
+import oldmana.general.md.client.gui.utils.TextPainter;
+import oldmana.general.md.client.gui.utils.TextPainter.Alignment;
+import oldmana.general.md.universal.card.Card;
 
 public class Utils
 {
@@ -54,5 +62,32 @@ public class Utils
 	public static FontMetrics getFontMetrics(Font font)
 	{
 		return button.getFontMetrics(font);
+	}
+	
+	public static void drawCardOn(Card card, Graphics g, double rotation)
+	{
+		Color[] valueColors = new Color[] {Color.YELLOW, Color.PINK, Color.GREEN, Color.CYAN, Color.MAGENTA, null, 
+				null, null, null, Color.ORANGE};
+		
+		int width = g.getClipBounds().width;
+		int height = g.getClipBounds().height;
+		
+		g.setColor(valueColors[card.getValue() - 1]);
+		g.fillRect(0, 0, width, height);
+		g.setColor(Color.BLACK);
+		g.drawRect(0, 0, width - 1, height - 1);
+		g.setColor(Color.BLACK);
+		TextPainter valueTL = new TextPainter("$" + card.getValue() + "M", Utils.getFont(Font.PLAIN, 12), new Rectangle(0, 0, width, height), false, false);
+		valueTL.setHorizontalAlignment(Alignment.LEFT);
+		valueTL.setVerticalAlignment(Alignment.TOP);
+		TextPainter valueRB = new TextPainter("$" + card.getValue() + "M", Utils.getFont(Font.PLAIN, 12), new Rectangle(0, 0, width, height), false, false);
+		valueRB.setHorizontalAlignment(Alignment.RIGHT);
+		valueRB.setVerticalAlignment(Alignment.BOTTOM);
+		valueTL.paint((Graphics2D) g);
+		valueRB.paint((Graphics2D) g);
+		TextPainter name = new TextPainter(card.getName(), Utils.getFont(Font.PLAIN, (int) (height * 0.1)), new Rectangle(0, 0, width, height), false, false);
+		name.setHorizontalAlignment(Alignment.CENTER);
+		name.setVerticalAlignment(Alignment.CENTER);
+		name.paint((Graphics2D) g);
 	}
 }

@@ -105,4 +105,9 @@ public class CardSet
 	{
 		return setType.getMaxSet() <= properties.size(); // The size better not be greater than the max set..
 	}
+	
+	public boolean canSafelyAddCard()
+	{
+		return setType.getMaxSet() > properties.size() + 1;
+	}
 }

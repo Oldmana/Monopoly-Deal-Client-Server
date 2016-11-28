@@ -14,5 +14,18 @@ public class CashPile
 		
 	}
 	
+	public void addCash(Card card)
+	{
+		cash.add(card);
+	}
 	
+	public List<Card> getCash()
+	{
+		return cash;
+	}
+	
+	public void removeCash(Card card)
+	{
+		cash.remove(card);
+	}
 }

@@ -9,7 +9,7 @@ import oldmana.general.md.universal.card.Card;
  * only see its own hand.
  *
  */
-public class Hand
+public class Hand extends InvisibleHand
 {
 	private List<Card> cards;
 	
@@ -42,7 +42,8 @@ public class Hand
 		return cards;
 	}
 	
-	public int cardCount()
+	@Override
+	public int getCardCount()
 	{
 		return cards.size();
 	}

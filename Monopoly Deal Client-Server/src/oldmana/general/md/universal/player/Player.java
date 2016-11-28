@@ -17,8 +17,10 @@ public class Player
 {
 	private int ID;
 	
-	private List<CardSet> properties = new ArrayList<CardSet>();
+	private List<CardSet> sets = new ArrayList<CardSet>();
 	private CashPile cash = new CashPile();
+	
+	private RentStatus rentStatus = new RentStatus();
 	
 	private Hand hand;
 	private InvisibleHand invisibleHand;
@@ -39,12 +41,12 @@ public class Player
 	
 	public void addCardSet(CardSet set)
 	{
-		properties.add(set);
+		sets.add(set);
 	}
 	
 	public List<CardSet> getSets()
 	{
-		return properties;
+		return sets;
 	}
 	
 	/**Checks if the player has a solid set of the specified property type.
@@ -55,7 +57,7 @@ public class Player
 	 */
 	public boolean hasSolidSet(PropertyType type)
 	{
-		for (CardSet set : properties)
+		for (CardSet set : sets)
 		{
 			if (set.getSetType() == type && set.isSolid())
 			{
@@ -67,7 +69,7 @@ public class Player
 	
 	public CardSet getSolidSet(PropertyType type)
 	{
-		for (CardSet set : properties)
+		for (CardSet set : sets)
 		{
 			if (set.getSetType() == type && set.isSolid())
 			{
@@ -79,7 +81,7 @@ public class Player
 	
 	public boolean hasSafeSet(PropertyType type)
 	{
-		for (CardSet set : properties)
+		for (CardSet set : sets)
 		{
 			if (set.getSetType() == type && set.getCardCount() + 1 < type.getMaxSet())
 			{
@@ -100,18 +102,17 @@ public class Player
 			PropertyWildCard wild = (PropertyWildCard) prop;
 			boolean success = false;
 			// Attempt to place card in an existing set without creating a monopoly
-			for (CardSet set : properties)
+			for (CardSet set : sets)
 			{
 				if ((set.getSetType() == wild.getTypes()[0] || set.getSetType() == wild.getTypes()[1]) &&
-						set.getCardCount() + 1 < set.getSetType().getMaxSet())
+						set.canSafelyAddCard())
 				{
 					set.addCard(prop);
 					success = true;
 					break;
 				}
 				else if (set.isAmbiguous() && (set.getOtherType() == wild.getTypes()[0] || 
-						set.getOtherType() == wild.getTypes()[1]) && set.getCardCount() + 1 < 
-						set.getOtherType().getMaxSet())
+						set.getOtherType() == wild.getTypes()[1]) && set.canSafelyAddCard())
 				{
 					set.toggleType();
 					set.addCard(prop);
@@ -123,15 +124,35 @@ public class Player
 			{
 				CardSet set = new CardSet(wild.getTypes()[0]);
 				set.addCard(prop);
-				properties.add(set);
+				sets.add(set);
 			}
 		}
 		else
 		{
-			
+			boolean success = false;
+			for (CardSet set : sets)
+			{
+				if (set.getSetType() == prop.getType() && set.canSafelyAddCard())
+				{
+					set.addCard(prop);
+					success = true;
+				}
+			}
+			if (!success)
+			{
+				CardSet set = new CardSet(prop.getType());
+				set.addCard(prop);
+				sets.add(set);
+			}
 		}
 	}
 	
+	/**<b>Side: Server</b><br><br>
+	 * 
+	 * Draws a card.
+	 * 
+	 * @return The drawn card
+	 */
 	public Card drawCard()
 	{
 		ServerGame game = ServerGame.getGameInstance();
@@ -158,6 +179,16 @@ public class Player
 		return invisibleHand;
 	}
 	
+	public RentStatus getRentStatus()
+	{
+		return rentStatus;
+	}
+	
+	public boolean owesMoney()
+	{
+		return rentStatus.getOwed() > 0;
+	}
+	
 	public CashPile getCashPile()
 	{
 		return cash;
@@ -177,7 +208,7 @@ public class Player
 		return connection;
 	}
 	
-	public static class RentStatus
+	public class RentStatus
 	{
 		private Player renter;
 		private int owed;
@@ -207,24 +238,12 @@ public class Player
 			owed -= card.getValue();
 			if (card instanceof ActionCard || card instanceof MoneyCard)
 			{
-				// TODO: Add to cash pile
-				//renter.getCashPile()
+				renter.getCashPile().addCash(card);
+				
 			}
 			else if (card instanceof PropertyCard)
 			{
-				PropertyCard prop = (PropertyCard) card;
-				if (card instanceof PropertyWildCard)
-				{
-					
-				}
-				else
-				{
-					// TODO: Better card placement logic needed
-					if (renter.hasSolidSet(prop.getType()))
-					{
-						renter.getSolidSet(prop.getType()).addCard(prop);
-					}
-				}
+				grantPropertySafely((PropertyCard) card);
 			}
 		}
 	}
