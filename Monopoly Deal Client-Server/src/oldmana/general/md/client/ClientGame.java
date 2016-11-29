@@ -3,6 +3,7 @@ package oldmana.general.md.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.teambrimis.brett.MJNetworkingAPI.MJConnection;
 import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 import oldmana.general.md.client.card.ClientDeck;
 import oldmana.general.md.universal.UniversalGame;
@@ -16,8 +17,6 @@ public class ClientGame extends UniversalGame
 	
 	private int self;
 	private ClientDeck deck;
-	
-	private List<Card> cardRegistry = new ArrayList<Card>();
 	
 	public ClientGame()
 	{
@@ -41,7 +40,8 @@ public class ClientGame extends UniversalGame
 		return deck;
 	}
 	
-	public void processPacket(Packet p)
+	@Override
+	public void processPacket(Packet p, MJConnection connection)
 	{
 		if (p instanceof PacketHand)
 		{
@@ -53,5 +53,12 @@ public class ClientGame extends UniversalGame
 	public static ClientGame getGameInstance()
 	{
 		return game;
+	}
+
+	@Override
+	public void tick()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

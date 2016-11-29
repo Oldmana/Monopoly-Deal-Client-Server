@@ -2,14 +2,20 @@ package oldmana.general.md.server;
 
 import java.util.List;
 
+import net.teambrimis.brett.MJNetworkingAPI.MJConnection;
+import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
 import oldmana.general.md.server.card.ServerDeck;
 import oldmana.general.md.universal.UniversalGame;
 import oldmana.general.md.universal.card.Card;
 import oldmana.general.md.universal.card.DiscardPile;
+import oldmana.general.md.universal.packet.PacketPing;
+import oldmana.general.md.universal.packet.PacketPingResponse;
 import oldmana.general.md.universal.player.Player;
 
 public class ServerGame extends UniversalGame
 {
+	private static final double SERVER_VERSION = 0.1;
+	
 	private static ServerGame game;
 	
 	private ServerDeck deck;
@@ -70,5 +76,37 @@ public class ServerGame extends UniversalGame
 	public static ServerGame getGameInstance()
 	{
 		return game;
+	}
+
+	@Override
+	public void processPacket(Packet p, MJConnection connection)
+	{
+		if (p instanceof PacketPing)
+		{
+			if (((PacketPing) p).getClientVersion() >= SERVER_VERSION)
+			{
+				PacketPingResponse response = new PacketPingResponse(true, SERVER_VERSION);
+				try
+				{
+					connection.sendPacket(response);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void processPacket(Packet p, Player player)
+	{
+		
+	}
+
+	@Override
+	public void tick()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

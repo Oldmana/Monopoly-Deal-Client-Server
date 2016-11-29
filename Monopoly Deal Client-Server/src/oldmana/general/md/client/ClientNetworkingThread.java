@@ -30,7 +30,7 @@ public class ClientNetworkingThread extends Thread
 					@Override
 					public void run()
 					{
-						ClientGame.getGameInstance().processPacket(packet);
+						ClientGame.getGameInstance().processPacket(packet, connection);
 					}
 				});
 			}
