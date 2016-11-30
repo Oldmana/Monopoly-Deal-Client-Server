@@ -1,13 +1,17 @@
 package oldmana.general.md.client;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -66,13 +70,30 @@ public class Utils
 		return button.getFontMetrics(font);
 	}
 	
-	public static void drawCardOn(Card card, Graphics g, double rotation)
+	public static BufferedImage createCompatibleImage(int width, int height)
+	{
+		return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration()
+		.createCompatibleImage(width, height);
+	}
+	
+	public static void drawRotatedImage(Graphics2D g, BufferedImage image, double degrees, int width, int height)
+	{
+		double rotationRequired = Math.toRadians(degrees);
+		double centerX = width / 2;
+		double centerY = height / 2;
+		AffineTransform prev = g.getTransform();
+		g.rotate(rotationRequired, centerX, centerY);
+		g.drawImage(image, 0, 0, null);
+		g.setTransform(prev);
+	}
+	
+	public static void drawCardOn(Card card, Graphics g, Dimension size, double rotation)
 	{
 		Color[] valueColors = new Color[] {Color.YELLOW, Color.PINK, Color.GREEN, Color.CYAN, Color.MAGENTA, null, 
 				null, null, null, Color.ORANGE};
 		
-		int width = g.getClipBounds().width;
-		int height = g.getClipBounds().height;
+		int width = size.width;
+		int height = size.height;
 		
 		g.setColor(valueColors[card.getValue() - 1]);
 		g.fillRect(0, 0, width, height);

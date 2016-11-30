@@ -7,48 +7,27 @@ import java.awt.Point;
 import javax.swing.JLayeredPane;
 
 import oldmana.general.md.client.Utils;
+import oldmana.general.md.universal.card.Card;
 import oldmana.general.md.universal.card.CardSet;
 
-public class JSet extends JLayeredPane
+public class JSet extends JExtendedComponent
 {
 	private CardSet set;
-	
-	private Point centeredLoc;
-	private double rotation = 0;
-	private Dimension realSize;
 	
 	public JSet(CardSet set)
 	{
 		this.set = set;
 	}
 	
-	public void setCenterLocation(Point p)
-	{
-		centeredLoc = p;
-		
-		
-	}
-	
-	public void setRotation(int rotation)
-	{
-		this.rotation = rotation;
-		
-		
-	}
-	
-	public double getRotation()
-	{
-		return rotation;
-	}
-	
-	public void setRealSize(Dimension d)
-	{
-		this.realSize = d;
-	}
-	
 	@Override
-	public void paintComponent(Graphics g)
+	public void paintUnmodified(Graphics g)
 	{
-		
+		int i = 0;
+		for (Card card : set.getCards())
+		{
+			Graphics sec = g.create(0, (int) (i * (1.0 / 3) * (getRealBounds().height / 2)), getRealBounds().width, getRealBounds().height / 2);
+			Utils.drawCardOn(card, sec, new Dimension(getRealBounds().width, getRealBounds().height / 2), getRotation());
+			i++;
+		}
 	}
 }

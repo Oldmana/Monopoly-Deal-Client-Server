@@ -9,7 +9,11 @@ import javax.swing.JLayeredPane;
 import oldmana.general.md.client.Utils;
 import oldmana.general.md.client.gui.component.JCard;
 import oldmana.general.md.client.gui.component.JDeck;
+import oldmana.general.md.client.gui.component.JSet;
 import oldmana.general.md.universal.card.Card;
+import oldmana.general.md.universal.card.CardSet;
+import oldmana.general.md.universal.card.PropertyCard;
+import oldmana.general.md.universal.card.PropertyCard.PropertyType;
 
 public class MDWindow extends JFrame
 {
@@ -51,6 +55,16 @@ public class MDWindow extends JFrame
 		Utils.setSizeOf(card, 0.08, 0.2);
 		Utils.setLocationOfCentered(card, 0.1, 0.1);
 		
+		CardSet set = new CardSet(PropertyType.BROWN);
+		PropertyCard p1 = new PropertyCard(1, PropertyType.BROWN);
+		PropertyCard p2 = new PropertyCard(2, PropertyType.BROWN);
+		PropertyCard p3 = new PropertyCard(3, PropertyType.BROWN);
+		set.addCard(p1);
+		set.addCard(p2);
+		set.addCard(p3);
+		JSet jset = new JSet(set);
+		jset.setRealBounds(200, 200, (int) (getWidth() * 0.08), (int) (getHeight() * 0.4));
+		table.add(jset);
 	}
 	
 	public void showMenu()
