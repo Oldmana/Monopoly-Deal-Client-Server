@@ -10,12 +10,14 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
+import oldmana.general.md.client.gui.component.JExtendedComponent;
 import oldmana.general.md.client.gui.utils.TextPainter;
 import oldmana.general.md.client.gui.utils.TextPainter.Alignment;
 import oldmana.general.md.universal.card.Card;
@@ -38,6 +40,12 @@ public class Utils
 				(int) (c.getParent().getHeight() * yFrac) - c.getHeight() / 2);
 	}
 	
+	public static void setRealLocationOfCentered(JExtendedComponent c, double xFrac, double yFrac)
+	{
+		c.setRealLocationCentered((int) (c.getParent().getWidth() * xFrac) - c.getWidth() / 2, 
+				(int) (c.getParent().getHeight() * yFrac) - c.getHeight() / 2);
+	}
+	
 	/**Sets the location of the component at a percent relative to the parent container.
 	 * 
 	 * @param c - Component to set location of
@@ -49,6 +57,11 @@ public class Utils
 		c.setLocation((int) (c.getParent().getWidth() * xFrac), (int) (c.getParent().getHeight() * yFrac));
 	}
 	
+	public static void setRealLocationOf(JExtendedComponent c, double xFrac, double yFrac)
+	{
+		c.setRealLocation((int) (c.getParent().getWidth() * xFrac), (int) (c.getParent().getHeight() * yFrac));
+	}
+	
 	/**Sets the size of the component at a percent relative to the parent container.
 	 * 
 	 * @param c - Component to set size of
@@ -58,6 +71,11 @@ public class Utils
 	public static void setSizeOf(JComponent c, double xFrac, double yFrac)
 	{
 		c.setSize((int) Math.round(c.getParent().getWidth() * xFrac), (int) Math.round(c.getParent().getHeight() * yFrac));
+	}
+	
+	public static void setRealSizeOf(JExtendedComponent c, double xFrac, double yFrac)
+	{
+		c.setRealSize((int) Math.round(c.getParent().getWidth() * xFrac), (int) Math.round(c.getParent().getHeight() * yFrac));
 	}
 	
 	public static Font getFont(int type, int size)
@@ -73,7 +91,7 @@ public class Utils
 	public static BufferedImage createCompatibleImage(int width, int height)
 	{
 		return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration()
-		.createCompatibleImage(width, height);
+		.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
 	}
 	
 	public static void drawRotatedImage(Graphics2D g, BufferedImage image, double degrees, int width, int height)
@@ -83,7 +101,9 @@ public class Utils
 		double centerY = height / 2;
 		AffineTransform prev = g.getTransform();
 		g.rotate(rotationRequired, centerX, centerY);
-		g.drawImage(image, 0, 0, null);
+		int startX = (int) (centerX - image.getWidth() / 2);
+		int startY = (int) (centerY - image.getHeight() / 2);
+		g.drawImage(image, startX, startY, null);
 		g.setTransform(prev);
 	}
 	

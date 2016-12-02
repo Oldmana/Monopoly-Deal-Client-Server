@@ -1,5 +1,6 @@
 package oldmana.general.md.client.gui.component;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -11,7 +12,7 @@ import oldmana.general.md.client.Utils;
 
 public abstract class JExtendedComponent extends JComponent
 {
-	private Rectangle realBounds;
+	private Rectangle realBounds = new Rectangle();
 	
 	private double rotation = 0.0;
 	
@@ -39,7 +40,28 @@ public abstract class JExtendedComponent extends JComponent
 		return realBounds;
 	}
 	
-	public void setRotation(int rotation)
+	public void setRealSize(int width, int height)
+	{
+		realBounds.setSize(width, height);
+		
+		adjustToRotation();
+	}
+	
+	public void setRealLocation(int x, int y)
+	{
+		realBounds.setLocation(x, y);
+		
+		adjustToRotation();
+	}
+	
+	public void setRealLocationCentered(int x, int y)
+	{
+		realBounds.setLocation((int) (x + (realBounds.getWidth() / 2)), (int) (y + (realBounds.getHeight() / 2)));
+		
+		adjustToRotation();
+	}
+	
+	public void setRotation(double rotation)
 	{
 		this.rotation = rotation;
 		
@@ -69,11 +91,15 @@ public abstract class JExtendedComponent extends JComponent
 	public void paintComponent(Graphics cg)
 	{
 		BufferedImage unrotated = Utils.createCompatibleImage(realBounds.width, realBounds.height);
-		BufferedImage rotated = Utils.createCompatibleImage(cg.getClipBounds().width, cg.getClipBounds().height);
+		BufferedImage rotated = Utils.createCompatibleImage(getWidth(), getHeight());
 		Graphics g = unrotated.getGraphics();
 		Graphics rg = rotated.getGraphics();
+		g.setColor(new Color(0, 0, 0, 0));
+		g.fillRect(0, 0, getWidth(), getHeight());
+		rg.setColor(new Color(0, 0, 0, 0));
+		rg.fillRect(0, 0, getWidth(), getHeight());
 		paintUnmodified(g);
 		Utils.drawRotatedImage((Graphics2D) rg, unrotated, rotation, rotated.getWidth(), rotated.getHeight());
-		cg.drawImage(rotated, 0, 0, null);
+		cg.drawImage(rotated, 0, 0, this);
 	}
 }
