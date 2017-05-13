@@ -23,7 +23,6 @@ public class Player
 	private RentStatus rentStatus = new RentStatus();
 	
 	private Hand hand;
-	private InvisibleHand invisibleHand;
 	
 	/**Only used by the server.
 	 */
@@ -176,7 +175,7 @@ public class Player
 	 */
 	public InvisibleHand getInvisibleHand()
 	{
-		return invisibleHand;
+		return hand;
 	}
 	
 	public RentStatus getRentStatus()

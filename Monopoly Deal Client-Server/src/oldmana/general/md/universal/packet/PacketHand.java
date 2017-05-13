@@ -55,5 +55,4 @@ public class PacketHand extends Packet
 		buffer.finalizeData();
 		return buffer.getByteArray();
 	}
-	
 }

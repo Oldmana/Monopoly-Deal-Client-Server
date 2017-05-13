@@ -35,7 +35,6 @@ public class GoActionCard extends ActionCard
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
