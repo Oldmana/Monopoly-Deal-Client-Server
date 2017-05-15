@@ -154,8 +154,6 @@ public class JCardPile extends JLayeredPane implements PixelRatio
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);
-		
 		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 	}
 

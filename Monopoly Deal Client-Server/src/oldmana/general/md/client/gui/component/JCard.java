@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,7 @@ public class JCard extends JComponent implements PixelRatio
 	public void paintComponent(Graphics cg)
 	{
 		BufferedImage img = Utils.createCompatibleImage(getWidth(), getHeight());
-		Graphics g = img.createGraphics();
+		Graphics2D g = img.createGraphics();
 		g.setColor(valueColors[card.getValue() - 1]);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
@@ -49,6 +50,8 @@ public class JCard extends JComponent implements PixelRatio
 		g.setColor(Color.BLACK);
 		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 		g.setColor(Color.BLACK);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		
 		TextPainter valueTL = new TextPainter("$" + card.getValue() + "M", Utils.getFont(Font.PLAIN, (int) (getHeight() * 0.1)), new Rectangle(0, 0, getWidth(), getHeight()), false, false);
 		valueTL.setHorizontalAlignment(Alignment.LEFT);
 		valueTL.setVerticalAlignment(Alignment.TOP);
