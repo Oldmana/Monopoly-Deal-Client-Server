@@ -1,5 +1,6 @@
 package oldmana.general.md.universal.card;
 
+import oldmana.general.md.universal.card.action.DebtCollectorActionCard;
 import oldmana.general.md.universal.card.action.GoActionCard;
 import oldmana.general.md.universal.player.Player;
 
@@ -20,18 +21,19 @@ public abstract class ActionCard extends Card
 	
 	public enum ActionCardType
 	{
-		GO(false);
+		GO(false),
+		DEBT_COLLECTOR(true);
 		
-		private boolean offensive;
+		private boolean targeted;
 		
-		ActionCardType(boolean offensive)
+		ActionCardType(boolean targeted)
 		{
-			this.offensive = offensive;
+			this.targeted = targeted;
 		}
 		
-		public boolean isOffensive()
+		public boolean isTargeted()
 		{
-			return offensive;
+			return targeted;
 		}
 		
 		public static ActionCardType typeOf(int hashCode)
@@ -51,6 +53,10 @@ public abstract class ActionCard extends Card
 			if (card instanceof GoActionCard)
 			{
 				return GO;
+			}
+			else if (card instanceof DebtCollectorActionCard)
+			{
+				return DEBT_COLLECTOR;
 			}
 			return null;
 		}

@@ -1,26 +1,53 @@
 package oldmana.general.md.universal.card;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PropertyCard extends Card
 {
-	private PropertyType type;
+	private List<PropertyType> types;
 	
 	public PropertyCard(int ID, PropertyType type)
 	{
 		super(ID, type.name(), type.getValue());
-		this.type = type;
+		types = new ArrayList<PropertyType>();
+		types.add(type);
+	}
+	
+	public PropertyCard(int ID, String name, int value, List<PropertyType> types)
+	{
+		super(ID, name, value);
+		this.types = types;
 	}
 	
 	public PropertyType getType()
 	{
-		return type;
+		return types.get(0);
+	}
+	
+	public List<PropertyType> getTypes()
+	{
+		return types;
+	}
+	
+	public boolean isSolid()
+	{
+		return types.size() == 1;
+	}
+	
+	public boolean isBi()
+	{
+		return types.size() == 2;
+	}
+	
+	public boolean isMulti()
+	{
+		return types.size() > 2;
 	}
 	
 	public enum PropertyType
 	{
-		WILD(0, 0, null, null),
-		MULTICOLOR_WILD(0, 0, null, null),
 		BROWN(1, 2, new int[] {1, 2}, new Color(139, 69, 19)),
 		LIGHT_BLUE(1, 3, new int[] {1, 2, 3}, new Color(0, 191, 255)),
 		PURPLE(2, 3, new int[] {1, 2, 3}, new Color(106, 90, 205)),

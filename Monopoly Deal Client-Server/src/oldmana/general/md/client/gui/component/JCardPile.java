@@ -156,7 +156,7 @@ public class JCardPile extends JLayeredPane implements PixelRatio
 	{
 		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 	}
-
+	
 	@Override
 	public double getXToYRatio()
 	{

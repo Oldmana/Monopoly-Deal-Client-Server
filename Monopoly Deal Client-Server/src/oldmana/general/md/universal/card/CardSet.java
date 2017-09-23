@@ -11,6 +11,8 @@ public class CardSet
 	
 	private PropertyType setType;
 	
+	public CardSet() {}
+	
 	public CardSet(PropertyType setType)
 	{
 		this.setType = setType;
@@ -28,6 +30,10 @@ public class CardSet
 	
 	public void addCard(PropertyCard card)
 	{
+		if (properties.size() == 0)
+		{
+			setType = card.getType();
+		}
 		properties.add(card);
 	}
 	
@@ -50,8 +56,7 @@ public class CardSet
 	{
 		for (PropertyCard card : properties)
 		{
-			PropertyType type = card.getType();
-			if (type == PropertyType.WILD || type == PropertyType.MULTICOLOR_WILD)
+			if (!card.isSolid())
 			{
 				return false;
 			}
@@ -61,7 +66,7 @@ public class CardSet
 	
 	public boolean isAmbiguous()
 	{
-		if (properties.size() == 1 && properties.get(0) instanceof PropertyWildCard)
+		if (properties.size() == 1 && !properties.get(0).isSolid())
 		{
 			return true;
 		}

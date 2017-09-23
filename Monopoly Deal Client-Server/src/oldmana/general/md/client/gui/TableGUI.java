@@ -17,7 +17,6 @@ import oldmana.general.md.client.ClientGame;
 import oldmana.general.md.client.GraphicsUtils;
 import oldmana.general.md.client.Utils;
 import oldmana.general.md.client.gui.component.JCard;
-import oldmana.general.md.client.gui.component.JCardList;
 import oldmana.general.md.client.gui.component.JCardPile;
 import oldmana.general.md.client.gui.component.JDeck;
 import oldmana.general.md.client.gui.component.JInterface;
