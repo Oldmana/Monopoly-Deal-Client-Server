@@ -9,7 +9,7 @@ public class PropertyWildCard extends PropertyCard
 	
 	public PropertyWildCard(int ID, PropertyType[] types)
 	{
-		super(ID, PropertyType.WILD);
+		super(ID, null);
 		
 		this.types = types;
 	}
@@ -42,10 +42,5 @@ public class PropertyWildCard extends PropertyCard
 			}
 		}
 		return false;
-	}
-	
-	public PropertyType[] getTypes()
-	{
-		return types;
 	}
 }

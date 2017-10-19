@@ -19,10 +19,6 @@ public class MDPacketUtils
 		{
 			return new PacketActionCardData((ActionCard) card);
 		}
-		else if (card instanceof PropertyWildCard)
-		{
-			return new PacketPropertyWildCardData((PropertyWildCard) card);
-		}
 		else if (card instanceof PropertyCard)
 		{
 			return new PacketPropertyCardData((PropertyCard) card);
