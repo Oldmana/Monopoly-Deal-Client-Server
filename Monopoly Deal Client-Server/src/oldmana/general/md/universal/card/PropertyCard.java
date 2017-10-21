@@ -31,6 +31,28 @@ public class PropertyCard extends Card
 		return types;
 	}
 	
+	public List<PropertyType> getCommonTypes(PropertyCard... otherCards)
+	{
+		List<PropertyType> commonTypes = new ArrayList<PropertyType>();
+		for (PropertyType type : getTypes())
+		{
+			boolean compatible = true;
+			for (PropertyCard otherCard : otherCards)
+			{
+				if (!otherCard.getTypes().contains(type))
+				{
+					compatible = false;
+					break;
+				}
+			}
+			if (compatible)
+			{
+				commonTypes.add(type);
+			}
+		}
+		return commonTypes;
+	}
+	
 	public boolean isSolid()
 	{
 		return types.size() == 1;

@@ -64,6 +64,11 @@ public class CardSet
 		return true;
 	}
 	
+	public List<PropertyType> getCommonTypes()
+	{
+		return properties.get(0).getCommonTypes(properties.toArray(new PropertyCard[0]));
+	}
+	
 	public boolean isAmbiguous()
 	{
 		if (properties.size() == 1 && !properties.get(0).isSolid())
