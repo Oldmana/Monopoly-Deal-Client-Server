@@ -1,5 +1,11 @@
 package oldmana.general.md.universal.card;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import oldmana.general.md.universal.Universal;
+import oldmana.general.md.universal.player.Player;
+
 public class Card
 {
 	private int ID;
@@ -7,6 +13,16 @@ public class Card
 	private int value;
 	
 	private String description;
+	
+	private List<Player> concealedTo = new ArrayList<Player>();
+	
+	public Card()
+	{
+		for (Player p : Universal.getGame().getPlayers())
+		{
+			concealedTo.add(p);
+		}
+	}
 	
 	/**A card. The server dictates most of the functionality of cards.
 	 * 
@@ -56,5 +72,29 @@ public class Card
 	public String getDescription()
 	{
 		return description;
+	}
+	
+	public void setConcealedTo(List<Player> players)
+	{
+		concealedTo = players;
+	}
+	
+	public void concealedTo(Player player)
+	{
+		concealedTo.add(player);
+	}
+	
+	public void revealTo(Player player)
+	{
+		concealedTo.remove(player);
+	}
+	
+	/**
+	 * 
+	 * @return Whether or not the card is concealed from the player
+	 */
+	public boolean isConcealedTo(Player player)
+	{
+		return concealedTo.contains(player);
 	}
 }
