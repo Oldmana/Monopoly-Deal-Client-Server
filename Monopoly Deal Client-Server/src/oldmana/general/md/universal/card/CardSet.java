@@ -69,6 +69,7 @@ public class CardSet
 		return properties.get(0).getCommonTypes(properties.toArray(new PropertyCard[0]));
 	}
 	
+	// TODO: Marked for deletion
 	public boolean isAmbiguous()
 	{
 		if (properties.size() == 1 && !properties.get(0).isSolid())
@@ -78,37 +79,19 @@ public class CardSet
 		return false;
 	}
 	
-	public PropertyType getOtherType()
+	public boolean isCurrentlyCompatible(PropertyCard card)
 	{
-		if (isAmbiguous())
+		if (card.getTypes().contains(getSetType()))
 		{
-			PropertyType[] types = ((PropertyWildCard) properties.get(0)).getTypes();
-			if (types[0] == setType)
-			{
-				return types[1];
-			}
-			else
-			{
-				return types[0];
-			}
+			return true;
 		}
-		return null;
+		return false;
 	}
 	
-	public void toggleType()
+	public boolean isPotentiallyCompatible(PropertyCard card)
 	{
-		if (isAmbiguous())
-		{
-			PropertyType[] types = ((PropertyWildCard) properties.get(0)).getTypes();
-			if (types[0] == setType)
-			{
-				setType = types[1];
-			}
-			else
-			{
-				setType = types[0];
-			}
-		}
+		
+		return false;
 	}
 	
 	public boolean isComplete()
