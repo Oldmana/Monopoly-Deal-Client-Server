@@ -6,13 +6,13 @@ import java.util.List;
 import oldmana.general.md.server.card.PropertyCard;
 import oldmana.general.md.universal.card.PropertyType;
 
-public class CardSet
+public class PropertyCardSet
 {
 	private List<PropertyCard> properties = new ArrayList<PropertyCard>(4);
 	
 	private PropertyType setType;
 	
-	public CardSet()
+	public PropertyCardSet()
 	{
 		
 	}
@@ -46,8 +46,13 @@ public class CardSet
 		return prop.getPropertyTypes().contains(setType);
 	}
 	
+	public int getPropertyCount()
+	{
+		return properties.size();
+	}
+	
 	public int getRent()
 	{
-		return setType.getRent(properties.size());
+		return setType.getRent(getPropertyCount());
 	}
 }
