@@ -1,11 +1,10 @@
 package oldmana.general.md.server;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 public class ServerThread extends Thread
 {
-	private List<Runnable> tasks = new ArrayList<Runnable>();
+	private static Stack<Runnable> tasks = new Stack<Runnable>();
 	
 	public ServerThread()
 	{
@@ -15,10 +14,12 @@ public class ServerThread extends Thread
 	@Override
 	public void run()
 	{
-		while (!tasks.isEmpty())
+		synchronized (tasks)
 		{
-			tasks.get(0).run();
-			tasks.remove(0);
+			while (!tasks.empty())
+			{
+				tasks.pop().run();
+			}
 		}
 		
 		try
@@ -31,11 +32,11 @@ public class ServerThread extends Thread
 		}
 	}
 	
-	public void schedule(Runnable runnable)
+	public static void schedule(Runnable runnable)
 	{
-		synchronized (this)
+		synchronized (tasks)
 		{
-			tasks.add(runnable);
+			tasks.push(runnable);
 		}
 	}
 }

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class PlayerHand
 {
-private List<Card> cards;
+	private List<Card> cards = new ArrayList<Card>();
 	
 	public PlayerHand()
 	{
-		cards = new ArrayList<Card>();
+		
 	}
 	
 	/**Inserts a card to the end of the hand.
@@ -29,6 +29,13 @@ private List<Card> cards;
 	public void removeCardAt(int index)
 	{
 		cards.remove(index);
+	}
+	
+	public void moveCard(int from, int to)
+	{
+		Card card = cards.get(from);
+		cards.remove(from);
+		cards.add(to, card);
 	}
 	
 	public List<Card> getHand()

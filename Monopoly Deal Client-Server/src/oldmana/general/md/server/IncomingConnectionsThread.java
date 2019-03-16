@@ -5,11 +5,11 @@ import java.io.IOException;
 import net.teambrimis.brett.MJNetworkingAPI.server.MJServer;
 import net.teambrimis.brett.MJNetworkingAPI.server.MJServer.MJConnectAttempt;
 
-public class ServerIncomingConnectionsThread extends Thread
+public class IncomingConnectionsThread extends Thread
 {
 	private MJServer server;
 	
-	public ServerIncomingConnectionsThread() throws IOException
+	public IncomingConnectionsThread() throws IOException
 	{
 		server = new MJServer(209);
 		
@@ -25,6 +25,14 @@ public class ServerIncomingConnectionsThread extends Thread
 			if (attempt.successful())
 			{
 				
+				ServerThread.schedule(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						
+					}
+				});
 			}
 			else
 			{

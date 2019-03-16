@@ -11,12 +11,15 @@ public class PacketLogin extends Packet
 	
 	private String name;
 	
+	private long UUID;
+	
 	public PacketLogin() {}
 	
-	public PacketLogin(double clientVersion, String name)
+	public PacketLogin(double clientVersion, String name, long UUID)
 	{
 		this.clientVersion = clientVersion;
 		this.name = name;
+		this.UUID = UUID;
 	}
 	
 	public void setClientVersion(double clientVersion)
@@ -39,11 +42,22 @@ public class PacketLogin extends Packet
 		return name;
 	}
 	
+	public void setUUID(long UUID)
+	{
+		this.UUID = UUID;
+	}
+	
+	public long getUUID()
+	{
+		return UUID;
+	}
+	
 	@Override
 	public void fromBytes(MJDataBuffer data)
 	{
 		setClientVersion(data.getDouble());
 		setName(data.getString());
+		setUUID(data.getLong());
 	}
 
 	@Override
@@ -53,6 +67,7 @@ public class PacketLogin extends Packet
 		buffer.addShort((short) ID);
 		buffer.addDouble(getClientVersion());
 		buffer.addString(getName());
+		buffer.addLong(UUID);
 		buffer.finalizeData();
 		return buffer.getByteArray();
 	}

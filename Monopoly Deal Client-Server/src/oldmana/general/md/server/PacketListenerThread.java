@@ -2,13 +2,14 @@ package oldmana.general.md.server;
 
 import net.teambrimis.brett.MJNetworkingAPI.MJConnection;
 import net.teambrimis.brett.MJNetworkingAPI.packet.Packet;
+import oldmana.general.md.server.player.Client;
 import oldmana.general.md.universal.player.Player;
 
-public class ServerClientPacketListenerThread extends Thread
+public class PacketListenerThread extends Thread
 {
 	private MJConnection connection;
 	
-	public ServerClientPacketListenerThread(MJConnection connection)
+	public PacketListenerThread(MJConnection connection)
 	{
 		this.connection = connection;
 	}
@@ -45,5 +46,10 @@ public class ServerClientPacketListenerThread extends Thread
 			}
 		}
 		return null;
+	}
+	
+	private Client getClient()
+	{
+		return null; // TODO: Get the client
 	}
 }
